@@ -5,6 +5,7 @@ import 'package:mvvm_getx/shared/label_widget.dart';
 import 'sign_in_controller.dart';
 
 class SignInWidget extends GetView<SignInController> {
+  const SignInWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mvvm_getx/feature/sign_in/model/SignInResponse.dart';
 import 'package:mvvm_getx/feature/sign_in/repository/sign_in_repository.dart';
+import 'package:mvvm_getx/routes/app_routes.dart';
 
 class SignInController extends GetxController with StateMixin<SignInResponse> {
   final GlobalKey<FormState> logInFormKey = GlobalKey<FormState>();
@@ -57,20 +58,30 @@ class SignInController extends GetxController with StateMixin<SignInResponse> {
   }
 
   void signIn() async {
-    final isValid = logInFormKey.currentState!.validate();
+    Get.toNamed(Routes.HOME);
+
+    /*final isValid = logInFormKey.currentState!.validate();
     if (!isValid) {
       return;
     }
     try {
       isLoading(true);
       logInFormKey.currentState!.save();
-      signInRepository.getSignIn().then((data) {
-        change(data, status: RxStatus.success());
-      }, onError: (err) {
-        change(null, status: RxStatus.error(err.toString()));
+
+      Future.delayed(const Duration(seconds: 1), () {
+        signInRepository.getSignIn().then((data) {
+          change(data, status: RxStatus.success());
+          isLoading(false);
+          Get.toNamed(Routes.HOME);
+        }, onError: (err) {
+          change(null, status: RxStatus.error(err.toString()));
+          isLoading(false);
+        });
       });
+
+
     } finally {
-      isLoading(false);
-    }
+      //isLoading(false);
+    }*/
   }
 }
