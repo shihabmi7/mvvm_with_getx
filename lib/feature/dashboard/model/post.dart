@@ -5,7 +5,7 @@ import 'dart:convert';
 
 List<Post> postFromJson(String str) => List<Post>.from(json.decode(str).map((x) => Post.fromJson(x)));
 
-String postToJson(List<Post> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String postToJson(List<Post> data) => json.encode(List<Post>.from(data.map((x) => x.toJson())));
 
 class Post {
   Post({
@@ -15,22 +15,24 @@ class Post {
     required this.body,
   });
 
-  int userId;
-  int id;
-  String title;
-  String body;
+  final int userId;
+  final int id;
+  final String title;
+  final String body;
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
-    userId: json["userId"],
-    id: json["id"],
-    title: json["title"],
-    body: json["body"],
+  String toJson() => json.encode(toMap());
+
+  factory Post.fromJson(dynamic json) => Post(
+    userId: json["userId"] ?? null,
+    id: json["id"] ?? null,
+    title: json["title"] ?? null,
+    body: json["body"] ?? null,
   );
 
-  Map<String, dynamic> toJson() => {
-    "userId": userId,
-    "id": id,
-    "title": title,
-    "body": body,
+  Map<String, dynamic> toMap() => {
+    "userId": userId == null ? null : userId,
+    "id": id == null ? null : id,
+    "title": title == null ? null : title,
+    "body": body == null ? null : body,
   };
 }

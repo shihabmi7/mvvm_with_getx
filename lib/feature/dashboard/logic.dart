@@ -1,9 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mvvm_getx/feature/dashboard/model/post.dart';
 import 'package:mvvm_getx/feature/dashboard/repository/dashboard_repo.dart';
 
-class DashboardController extends GetxController
-    with StateMixin<List<Post>> {
+class DashboardController extends GetxController with StateMixin<List<Post>> {
   final DashboardRepository repository;
 
   DashboardController({required this.repository});
@@ -16,37 +16,53 @@ class DashboardController extends GetxController
     _isLoading = isLoading;
   }
 
-  List<Post>? postList;
+  //List<Post>? postList;
+  //late final todoList = <Post>[].obs;
 
   @override
   void onInit() {
     super.onInit();
   }
+
   @override
   void onReady() {
     super.onReady();
     getPost();
+    //getPostWithProvider();
   }
 
   @override
-  void onClose() {
-
-  }
+  void onClose() {}
 
   Future<void> getPost() async {
     isLoading(true);
     try {
-      var result = await repository.getAllPost().then(
-          (value) => (data) {
-                // postList = data;
-                change(data, status: RxStatus.success());
-              }, onError: (error) {
-        change(null, status: RxStatus.error(error.toString()));
+      await repository
+          .getAllPost()
+          .then((value) => change(value, status: RxStatus.success()),
+              onError: (error) {
+        if (kDebugMode) {
+          change(value, status: RxStatus.error());
+          print(error);
+        }
       });
+    } finally {
+      isLoading(false);
+    }
+  }
 
-      // Future.delayed(const Duration(seconds: 1), () {
-      // });
-
+  Future<void> getPostWithProvider() async {
+    isLoading(true);
+    try {
+      await repository
+          .getAllPostWithProvider()
+          .then((value) => change(value, status: RxStatus.success()),
+              onError: (error) {
+        if (kDebugMode) {
+          change(value, status: RxStatus.error());
+          print(error);
+        }
+      });
     } finally {
       isLoading(false);
     }

@@ -11,13 +11,13 @@ class AppPages {
   static final routes = [
     GetPage(
       name: Routes.SIGN_IN,
-      page: () => SignInWidget(),
+      page: () => const SignInWidget(),
       binding: SignInBinding(),
       children: [],
     ),
     GetPage(
       name: Routes.HOME,
-      page: () => DashboardWidget(),
+      page: () => const DashboardWidget(),
       binding: DashboardBinding(),
       children: [],
     ),
